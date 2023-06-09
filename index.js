@@ -50,7 +50,7 @@ async function run() {
         const allClass = client.db('sportAcademies').collection('allClass');
         const selectClass = client.db('sportAcademies').collection('selectClass');
         const feedback = client.db('sportAcademies').collection('feedback');
-
+        // make jwt api
         app.post('/jwt', (req, res) => {
             const user = req.body;
             const token = jwt.sign(user, process.env.ACCESS_TOKEN, { expiresIn: "1h" })
