@@ -8,7 +8,7 @@ const port = process.env.PORT || 5000;
 
 
 
-// midleware
+// middleware
 app.use(cors());
 app.use(express.json());
 
@@ -17,14 +17,14 @@ app.use(express.json());
 const verifyJWT = (req, res, next) => {
     const authorization = req.headers.authorization;
     if (!authorization) {
-        return res.status(401).send({ error: true, message: "unauthorization access" })
+        return res.status(401).json({ error: true, message: "unauthorization access" })
     }
 
     const token = authorization.split(' ')[1];
 
     jwt.verify(token, process.env.ACCESS_TOKEN, (err, decoded) => {
         if (err) {
-            return res.status(401).send({ error: true, message: "unauthorization access" })
+            return res.status(401).json({ error: true, message: "unauthorization access" })
         }
         req.decoded = decoded;
         next();
@@ -57,7 +57,7 @@ async function run() {
         app.post('/jwt', (req, res) => {
             const user = req.body;
             const token = jwt.sign(user, process.env.ACCESS_TOKEN, { expiresIn: "1h" })
-            res.send({ token })
+            res.json({ token })
         })
 
         // user post api
@@ -66,15 +66,15 @@ async function run() {
             const query = { email: userData.email };
             const existingUser = await user.findOne(query);
             if (existingUser) {
-                return res.send({ message: "user already exist" })
+                return res.json({ message: "user already exist" })
             }
             const result = await user.insertOne(userData);
-            res.send(result);
+            res.json(result);
         })
         // api for get all user
         app.get('/user', async (req, res) => {
             const result = await user.find().toArray();
-            res.send(result);
+            res.json(result);
         })
         // change user role in admin
         app.patch('/user/admin/:id', async (req, res) => {
@@ -86,7 +86,7 @@ async function run() {
                 },
             }
             const result = await user.updateOne(filter, updateDoc);
-            res.send(result);
+            res.json(result);
         })
 
         // change user role in instructor
@@ -99,7 +99,7 @@ async function run() {
                 },
             }
             const result = await user.updateOne(filter, updateDoc);
-            res.send(result);
+            res.json(result);
         })
 
         // change status of classes approved
@@ -112,7 +112,7 @@ async function run() {
                 },
             }
             const result = await allClass.updateOne(filter, updateDoc);
-            res.send(result);
+            res.json(result);
         })
 
         // change status of classes deny
@@ -125,26 +125,26 @@ async function run() {
                 },
             }
             const result = await allClass.updateOne(filter, updateDoc);
-            res.send(result);
+            res.json(result);
         })
 
         // feedback post api
         app.post('/feedback', async (req, res) => {
             const feedBack = req.body;
             const result = await feedback.insertOne(feedBack)
-            res.send(result)
+            res.json(result)
         })
         // feedback get api
         app.get('/feedback', async (req, res) => {
             const result = await feedback.find().toArray();
-            res.send(result)
+            res.json(result)
         })
 
         app.delete('/user/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: new ObjectId(id) }
             const result = await user.deleteOne(query);
-            res.send(result);
+            res.json(result);
         })
 
 
@@ -153,7 +153,7 @@ async function run() {
             const addClass = req.body;
             console.log(addClass);
             const result = await selectClass.insertOne(addClass);
-            res.send(result);
+            res.json(result);
         })
         // all classes get api
         app.get('/selectclass', verifyJWT, async (req, res) => {
@@ -164,11 +164,11 @@ async function run() {
             }
             const decodedEmail = req.decoded.email;
             if (email !== decodedEmail) {
-                return res.status(403).send({ error: true, message: 'forbidden access' })
+                return res.status(403).json({ error: true, message: 'forbidden access' })
             }
 
             const result = await selectClass.find(query).toArray();
-            res.send(result);
+            res.json(result);
         })
 
         // seleted class delete api
@@ -177,17 +177,17 @@ async function run() {
             console.log(id)
             const query = { _id: new ObjectId(id) }
             const result = await selectClass.deleteOne(query);
-            res.send(result);
+            res.json(result);
         })
         // all classes post api
         app.post('/allclass', async (req, res) => {
             const classData = req.body;
             const result = await allClass.insertOne(classData);
-            res.send(result);
+            res.json(result);
         })
 
         // update class
-        app.put('/allclass/:id', async (req, res) => {
+        app.patch('/allclass/:id', async (req, res) => {
             let id = req.params.id;
             console.log(id)
             let classData = req.body;
@@ -201,12 +201,12 @@ async function run() {
                 }
             }
             const result = await allClass.updateOne(filter, updateClass);
-            res.send(result);
+            res.json(result);
         })
         //  all classes get api
         app.get('/allclass', async (req, res) => {
             const result = await allClass.find().sort({ enrolledStudents: -1 }).toArray();
-            res.send(result);
+            res.json(result);
 
         })
 
@@ -218,7 +218,7 @@ async function run() {
                 query = { instructorEmail: req.query.instructorEmail }
             }
             const result = await allClass.find(query).toArray();
-            res.send(result);
+            res.json(result);
         })
 
 
@@ -231,7 +231,7 @@ run().catch(console.dir);
 
 
 app.get('/', (req, res) => {
-    res.send('server is running now')
+    res.json('server is running now')
 })
 
 
