@@ -50,6 +50,7 @@ async function run() {
         const allClass = client.db('sportAcademies').collection('allClass');
         const selectClass = client.db('sportAcademies').collection('selectClass');
         const feedback = client.db('sportAcademies').collection('feedback');
+
         // make jwt api
         app.post('/jwt', (req, res) => {
             const user = req.body;
@@ -125,13 +126,13 @@ async function run() {
             res.send(result);
         })
 
-        // feedback api
+        // feedback post api
         app.post('/feedback', async (req, res) => {
             const feedBack = req.body;
             const result = await feedback.insertOne(feedBack)
             res.send(result)
         })
-
+        // feedback get api
         app.get('/feedback', async (req, res) => {
             const result = await feedback.find().toArray();
             res.send(result)
