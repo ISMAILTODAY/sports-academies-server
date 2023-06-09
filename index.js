@@ -208,17 +208,6 @@ async function run() {
 
         })
 
-        // my added class
-        // app.get('/allclass', async (req, res) => {
-        //     console.log(req.query)
-        //     const filter = {}
-        //     if (req.query?.email) {
-        //         filter = { instructorEmail: req.query.email }
-        //     };
-
-        //     const result = await allClass.find(filter).toArray();
-        //     res.send(result);
-        // })
         // api for all classes
         app.get('/myclass', async (req, res) => {
             console.log(req.query.instructorEmail)
