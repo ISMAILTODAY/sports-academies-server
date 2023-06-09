@@ -152,7 +152,7 @@ async function run() {
             const result = await selectClass.insertOne(addClass);
             res.send(result);
         })
-
+        // all classes get api
         app.get('/selectclass', verifyJWT, async (req, res) => {
             const email = req.query?.email;
             let query = {};
