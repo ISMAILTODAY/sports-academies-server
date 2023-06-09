@@ -57,7 +57,7 @@ async function run() {
             res.send({ token })
         })
 
-        // user related api
+        // user post api
         app.post('/user', async (req, res) => {
             const userData = req.body;
             const query = { email: userData.email };
