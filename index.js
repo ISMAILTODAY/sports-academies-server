@@ -176,7 +176,7 @@ async function run() {
             const result = await selectClass.deleteOne(query);
             res.send(result);
         })
-
+        // all classes post api
         app.post('/allclass', async (req, res) => {
             const classData = req.body;
             const result = await allClass.insertOne(classData);
