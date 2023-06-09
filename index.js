@@ -168,6 +168,7 @@ async function run() {
             res.send(result);
         })
 
+        // seleted class delete api
         app.delete('/selectclass/:id', async (req, res) => {
             const id = req.params.id;
             console.log(id)
