@@ -200,7 +200,7 @@ async function run() {
             const result = await allClass.updateOne(filter, updateClass);
             res.send(result);
         })
-
+        //  all classes get api
         app.get('/allclass', async (req, res) => {
             const result = await allClass.find().sort({ enrolledStudents: -1 }).toArray();
             res.send(result);
