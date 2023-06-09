@@ -218,7 +218,7 @@ async function run() {
         //     const result = await allClass.find(filter).toArray();
         //     res.send(result);
         // })
-
+        // api for all classes
         app.get('/myclass', async (req, res) => {
             console.log(req.query.instructorEmail)
             let query = {};
