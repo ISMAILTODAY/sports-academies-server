@@ -68,7 +68,7 @@ async function run() {
             const result = await user.insertOne(userData);
             res.send(result);
         })
-
+        // api for get all user
         app.get('/user', async (req, res) => {
             const result = await user.find().toArray();
             res.send(result);
