@@ -1,10 +1,11 @@
 const express = require('express');
+require('dotenv').config()
+const cors = require('cors');
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const app = express();
 const jwt = require('jsonwebtoken');
-const cors = require('cors');
 const port = process.env.PORT || 5000;
-require('dotenv').config()
+
 
 
 // midleware
@@ -46,6 +47,7 @@ async function run() {
     try {
         // Connect the client to the server	(optional starting in v4.7)
         await client.connect();
+
         const user = client.db('sportAcademies').collection('user');
         const allClass = client.db('sportAcademies').collection('allClass');
         const selectClass = client.db('sportAcademies').collection('selectClass');
