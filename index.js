@@ -145,7 +145,7 @@ async function run() {
         })
 
 
-
+        // all seleted class api
         app.post('/selectclass', async (req, res) => {
             const addClass = req.body;
             console.log(addClass);
